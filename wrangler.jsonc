@@ -1,0 +1,8 @@
+{
+  "name": "your-worker-name",
+  "compatibility_date": "2025-03-22",
+  "main": "src/index.ts",  // 指定入口文件
+  "assets": {
+    "directory": "./dist"   // 可选：指定静态资源目录
+  }
+}
