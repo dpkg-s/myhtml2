@@ -1,8 +1,3 @@
-{
-  "name": "your-worker-name",
-  "compatibility_date": "2025-03-22",
-  "main": "src/index.html",  // 指定入口文件
-  "assets": {
-    "directory": "./dist"   // 可选：指定静态资源目录
-  }
-}
+[static_files]  
+root = "."  # 若 HTML 直接在项目根目录，改为 "."  
+upload_all = true  
