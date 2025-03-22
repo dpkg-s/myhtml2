@@ -1,3 +1,1 @@
-[static_files]  
-root = "."  # 若 HTML 直接在项目根目录，改为 "."  
-upload_all = true  
+
