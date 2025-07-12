@@ -4,62 +4,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <titleOptimized Pag</title>
-    <style>
-        img {
-            width: 300px;
-        }
-    </style>
+    <title>某只鸟还在测试的博客</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-    <h4>新手摄影！</h4>
-    <p>设备:尼康d800e+28-70f2.8+50f1.8d(穷)</p>
-    <p>周六可接正片</p>
-    <p>
-        可动作指引(最好自己带，新人会的不多)
-    </p>
-    <p>
-        有问题只接说，接受批评
-    </p>
-    <p>
-        可扩列
-    </p>
-    <h5>价格如下:</h5>
-    <p>场照：</p>
-    <p>10r/张(曝光/构图正常，不喜欢直接删)</p>
-    <p>
-        可以要raw
-    </p>
-    <p>
-        15r/张(包后期，可小改不喜欢按没后期除理)
-    </p>
-    <p>
-        每个人审美不同，我不能保证我拍的每个人都喜欢
-    </p>
-    <p>
-        (暂且免费，灯阵没凑齐，随机抓 )
-    </p>
-    <p>
-        正片：
-    </p>
-    <p>
-        加我询问:先加3555789291/不行1625492725
-    </p>
-    <p>
-        例图展示:
-    </p>
-    </P>
-    <img src="img/1.jpg" alt="">
-    <br>
-    <img src="img/2.jpg" alt="">
-    <br>
-    <img src="img/3.jpg" alt="">
-    <br>
-    <img src="img/4.jpg" alt="">
-    <br>
-    <img src="img/5.jpg" alt="">
+    <script src="./index.js"></script>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">还没有logo</div>
+        <div class="nav-links">
+            <a href="javascript:scrollTo(0,0)">主页</a>
+            <a href="#2">介绍</a>
+            <a href="#3">作品</a>
+            <a href="#4">日志</a>
+            <button id="mode-toggle">
+                <img id="mode-toggle-img" src="./png/太阳.png" alt="切换模式">
+            </button>
+        </div>
+    </nav>
+    <!-- 一言 -->
+    <header class="hero">
+        <h1 id="quote">加载中...</h1>
+        <p>——来自<a href="https://hitokoto.cn/" name="2" style="color: #bcb5ad;">一言api</a></p>
+        <button id="scroll-down-btn">﹀</button>
+    </header>
+    <!-- 介绍 -->
+    <section class="section">
+        <h2><a name="3">我</a></h2>
+        <hr>
+        &nbsp;
+        <p>一位小事不想做，大事不会做，仅仅会一点歪门邪道的<br>/*程序员*/</p>
+        <p>二次元 <br> 摄影师</p>
+    </section>
+    <!-- 作品-->
+    <section class="section">
+        <h2>作品</h2>
+        <hr>
+        &nbsp;
+        &nbsp;
+        <h5>代码</h5>
+        <br>
+        <p>我好像没有什么好展示的，做的都是些小玩具、工具<br>目前会写些网页，三端开发也能搞一搞，硬件也会点<br>主达一个多而杂，但不精通</p>
+        &nbsp;
+        <br>
+        <h3>例图</h3>
+        <hr style="width:5%;margin:0 auto;height:2px;color:#111;">
+        <h5>风光</h5>
+        <div class="scroll-wrapper">
+            <button class="scroll-btn left">《</button>
+            <div class="scroll-container">
+                <div class="scroll-item"><img data-src="./jpg/1/1.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/1/2.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/1/3.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/1/4.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/1/5.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/1/6.jpg" loading="lazy"></div>
+            </div>
+            <button class="scroll-btn right">》</button>
+        </div>
 
+        &nbsp;
+        <h5><a name="4">人像</a></h5>
+        <div class="scroll-wrapper">
+            <button class="scroll-btn left">《</button>
+            <div class="scroll-container">
+                <div class="scroll-item"><img data-src="./jpg/2/1.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/2/2.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/2/3.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/2/4.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/2/5.jpg" loading="lazy"></div>
+                <div class="scroll-item"><img data-src="./jpg/2/6.jpg" loading="lazy"></div>
+            </div>
+            <button class="scroll-btn right">》</button>
+        </div>
+    </section>
+    <section class="section">
+        <h2>项目</h2>
+        <hr>
+        <!-- 小卡片 -->
+        <div class="scroll-container">
+            <div class="scroll-item2">
+                <h5>2025-7-11</h5>
+                <small>优化，加了些按钮和动画</small>
+            </div>
+            <div class="scroll-item2">
+                <h5>2025-7-6</h5>
+                <small>终于修了历史BUG</small>
+            </div>
+            <div class="scroll-item2">
+                <h5>2025-7-2</h5>
+                <small>突然想起来我有这个这个网站</small>
+            </div>
+            <div class="scroll-item2">
+                <h5>2025-3-6</h5>
+                <small>增加了些动画效果</small>
+            </div>
+            <div class="scroll-item2">
+                <h5>2025-3-6</h5>
+                <small>映射成功</small>
+            </div>
+            <div class="scroll-item2">
+                <h5>2025-3-5</h5>
+                <small>初版完成</small>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <small>做的不好，见谅，第一次，有问题我会慢慢的改</small>
+        <br>
+        <small>关于“人像”如果有侵权请联系<a href="tencent://message/?uin=1625492725&Site=在线客服&Menu=yes">我</a></small>
+        <br>
+        <samp><a href="https://github.com/dpkg-s/myhtml">github</a></samp>
+    </section>
 </body>
+<div id="loading-status" style="position: fixed; bottom: 10px; right: 10px;"></div>
 
 </html>
