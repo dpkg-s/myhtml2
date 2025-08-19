@@ -14,8 +14,8 @@
     <nav class="navbar">
         <div class="logo">还没有logo</div>
         <div class="nav-links">
-            <a href="javascript:scrollTo(0,0)">主页</a>
-            <a href="#2">介绍</a>
+            <a href="javascript:window.scrollTo({top:0, behavior:'smooth'})">主页</a>
+            <a href="#scroll-down-btn">介绍</a>
             <a href="#3">作品</a>
             <a href="#4">日志</a>
             <button id="mode-toggle">
@@ -25,8 +25,13 @@
     </nav>
     <!-- 一言 -->
     <header class="hero">
-        <h1 id="quote">加载中...</h1>
-        <p>——来自<a href="https://hitokoto.cn/" name="2" style="color: #bcb5ad;">一言api</a></p>
+        <div class="box">
+            <h1 id="quote">加载中...</h1>
+            <p>——来自<a href="https://hitokoto.cn/" style="color: #bcb5ad;" name="2">一言api</a></p>
+        </div>
+        <div class="bg-container" id="bg">
+            <h3 id="dynamic-text">// 这里是某只鸟的博客 //</h3>
+        </div>
         <button id="scroll-down-btn">﹀</button>
     </header>
     <!-- 介绍 -->
@@ -45,7 +50,7 @@
         &nbsp;
         <h5>代码</h5>
         <br>
-        <p>我好像没有什么好展示的，做的都是些小玩具、工具<br>目前会写些网页，三端开发也能搞一搞，硬件也会点<br>主达一个多而杂，但不精通</p>
+        <p>我好像没有什么好展示的，做的都是些小玩具、工具<br>如果硬说的话这个网页也属于<br>目前会写些网页，三端开发也能搞一搞，硬件也会点<br>主达一个多而杂，但不精通</p>
         &nbsp;
         <br>
         <h3>例图</h3>
@@ -95,6 +100,10 @@
         <!-- 小卡片 -->
         <div class="scroll-container">
             <div class="scroll-item2">
+                <h5>2025-8-19</h5>
+                <small>优化</small>
+            </div>
+            <div class="scroll-item2">
                 <h5>2025-7-11</h5>
                 <small>优化，加了些按钮和动画</small>
             </div>
@@ -121,13 +130,14 @@
         </div>
     </section>
     <section class="section">
-        <small>做的不好，见谅，第一次，有问题我会慢慢的改</small>
+        <small>第一次，做的不好，见谅，有问题我会慢慢的改</small>
         <br>
-        <small>关于“人像”如果有侵权请联系<a href="tencent://message/?uin=1625492725&Site=在线客服&Menu=yes">我</a></small>
+        <small>关于“人像”如果有侵权请联系<a href="https://api.1xz.icu/api/tiaozhuanqqziliao?qq=1625492725" class="QQ">我</a></small>
         <br>
         <samp><a href="https://github.com/dpkg-s/myhtml">github</a></samp>
     </section>
 </body>
-<div id="loading-status" style="position: fixed; bottom: 10px; right: 10px;"></div>
+<div id="loading-status" style="position: fixed; bottom: 10px; right: 10px; background-color: rgba(20, 20, 20,0.7 );">
+</div>
 
 </html>

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+
     // ================= 一言API加载 =================
     async function loadHitokoto() {
         try {
@@ -46,19 +47,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     /* -------------------- 隐藏导航栏 -------------------- */
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', function () {
-        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const navbar = document.querySelector('.navbar');
-        if (currentScrollTop > lastScrollTop) {
-            // 向下滚动
-            navbar.style.top = '-60px'; // 假设导航栏高度为 60px
-        } else {
-            // 向上滚动
-            navbar.style.top = '0';
-        }
-        lastScrollTop = currentScrollTop;
-    });
+    // let lastScrollTop = 0;
+    // window.addEventListener('scroll', function () {
+    //     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //     const navbar = document.querySelector('.navbar');
+    //     if (currentScrollTop > lastScrollTop) {
+    //         // 向下滚动
+    //         navbar.style.top = '-60px'; // 假设导航栏高度为 60px
+    //     } else {
+    //         // 向上滚动
+    //         navbar.style.top = '0';
+    //     }
+    //     lastScrollTop = currentScrollTop;
+    // });
     loadHitokoto();
     lazyLoadImages();
     /* --------------------  下滑按钮  -------------------- */
@@ -117,31 +118,39 @@ document.addEventListener('DOMContentLoaded', function () {
             { rootMargin: '200px' });
         images.forEach(img => observer.observe(img));
     }
+    /* -------------------- 图片生成随机 -------------------- */
+    // function getRadom(N, M) {
+    //     return Math.floor(Math.random() * (M - N + 1)) + N
+    // }
+    // console 
     /* -------------------- 滚动两侧按钮 -------------------- */
     function initScrollButtons() {
         const wrappers = document.querySelectorAll('.scroll-wrapper');
 
         wrappers.forEach(wrapper => {
+
             const container = wrapper.querySelector('.scroll-container');
             const btnLeft = wrapper.querySelector('.scroll-btn.left');
             const btnRight = wrapper.querySelector('.scroll-btn.right');
 
-            const scrollStep = 320; // 每次跳跃的像素距离（约等于一张图宽）
+            const scrollStep = 320; // 你原来的步长
+
+            const smoothTo = (left) => container.scrollTo({
+                left,
+                behavior: 'smooth'
+            });
 
             btnLeft.addEventListener('click', () => {
-                container.scrollTo({
-                    left: Math.max(container.scrollLeft - scrollStep, 0)
-                });
+                smoothTo(Math.max(container.scrollLeft - scrollStep, 0));
             });
 
             btnRight.addEventListener('click', () => {
                 const maxScroll = container.scrollWidth - container.clientWidth;
-                container.scrollTo({
-                    left: Math.min(container.scrollLeft + scrollStep, maxScroll)
-                });
+                smoothTo(Math.min(container.scrollLeft + scrollStep, maxScroll));
             });
         });
     }
 
     initScrollButtons();
+
 });
