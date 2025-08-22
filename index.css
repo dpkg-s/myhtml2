@@ -33,8 +33,9 @@ body.dark-mode a {
 }
 
 body.dark-mode .navbar {
-    background-color: #222;
     color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 body.dark-mode .scroll-item,
@@ -46,6 +47,10 @@ body.dark-mode .scroll-item2 {
 
 body.dark-mode hr {
     color: #666;
+}
+
+body.dark-mode .popup {
+    background-color: #333;
 }
 
 /* -------------------- 夜间模式按钮 -------------------- */
@@ -119,6 +124,40 @@ a {
     color: #000;
 }
 
+/* -----------------覆盖层：全屏居中显示文字--------------*/
+
+.welcome-text {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    pointer-events: none;
+    background-color: #fff;
+    transition: opacity 2s ease;
+}
+
+.welcome-text p {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 50px;
+    color: #000;
+    opacity: 1;
+    transition: opacity 2s ease;
+}
+
+@media (max-width: 510px) {
+    .welcome-text p {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 405px) {
+    .welcome-text p {
+        font-size: 30px;
+    }
+}
+
 /* -------------------- 导航栏样式 -------------------- */
 .navbar {
     position: fixed;
@@ -142,6 +181,39 @@ a {
 .nav-links {
     display: flex;
     gap: 20px;
+    align-items: center;
+}
+
+@media (max-width: 440px) {
+
+    .navbar {
+        padding: 10px;
+    }
+
+    .navbar .logo p,
+    .navbar a {
+        font-size: 12px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 350px) {
+
+    .navbar {
+        padding: 8px;
+    }
+
+    .navbar .logo p,
+    .navbar a {
+        font-size: 10px;
+    }
+
+    .nav-links {
+        gap: 10px;
+    }
 }
 
 /* -------------------- 顶部封面区 -------------------- */
@@ -152,21 +224,30 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url(https://pic.re/image) no-repeat center/cover;
+    background: url(http://www.98qy.com/sjbz/api.php) no-repeat center/cover;
+    /* background: url(https://pic.re/image) no-repeat center/cover; */
     color: #fff;
     text-align: center;
+    background-color: #aaa;
 }
+
+@media (max-width: 480px) {
+    .hero {
+        background: url(https://t.mwm.moe/mp) no-repeat center/cover;
+    }
+}
+
 
 .hero .box,
 .hero h3 {
-    padding: 0 0 0 10px;
+    padding: 0 10px 0 10px;
     background-color: rgba(10, 10, 10, 0.1);
     border-radius: 5px;
 
 }
 
 .hero h3 {
-    margin-top: 120px;
+    margin-top: 90px;
     font-size: 24px;
     font-weight: bold;
     transition: color 0.3s ease;
@@ -174,39 +255,81 @@ a {
 
 /* --------------------  下滑按钮  -------------------- */
 #scroll-down-btn {
-    margin-top: 300px;
-    font-size: 36px;
+    margin-top: 90px;
+    font-size: 50px;
     background-color: transparent;
     color: #fff;
     border: none;
     cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+
     animation: bounce 2s infinite;
 }
 
-#scroll-down-btn:hover {
-    transform: scale(1.2);
+/* 主箭头 */
+#scroll-down-btn span {
+    display: block;
+    animation: fadeArrow 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.dark-mode #scroll-down-btn {
-    color: #ddd;
-}
-
-#scroll-down-btn.hidden {
+/* 第二条箭头 */
+#scroll-down-btn::after {
+    content: "﹀";
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    color: #888;
     opacity: 0;
-    pointer-events: none;
+    animation: fadeArrow 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 0.2s;
+}
+
+/* 第三条箭头 */
+#scroll-down-btn::before {
+    content: "﹀";
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    color: #000;
+    opacity: 0;
+    animation: fadeArrow 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: 0.4s;
+}
+
+/* 渐显渐隐动画 */
+@keyframes fadeArrow {
+
+    0%,
+    40% {
+        opacity: 0;
+    }
+
+    50%,
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* 弹跳动画 */
 @keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
+    0% {
+        transform: translateY(20px);
     }
 
     50% {
-        transform: translateY(10px);
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(20px);
     }
 }
 
@@ -302,6 +425,42 @@ body.dark-mode .scroll-btn {
 
 
 /* 我QQ */
-.QQ {
-    color: #06f;
+.hover-box {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-box>button {
+    border: none;
+    background-color: #fff;
+    color: #f00;
+}
+
+
+.popup {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    min-width: 100px;
+    z-index: 99;
+    /* box-shadow: 0 0 1px 3000px rgba(0, 0, 0, 0.307);  */
+}
+
+.popup a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.popup a:hover {
+    background-color: #f0f0f0;
 }

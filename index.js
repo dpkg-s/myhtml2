@@ -1,4 +1,58 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // 禁用滚动函数
+    function disableScroll(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // 启用禁止滚动
+    function lockScroll() {
+        document.body.style.overflow = "hidden";
+        window.addEventListener("wheel", disableScroll, { passive: false });
+        window.addEventListener("touchmove", disableScroll, { passive: false });
+        window.addEventListener("keydown", keyBlock, { passive: false });
+    }
+
+    // 解锁滚动
+    function unlockScroll() {
+        document.body.style.overflow = "";
+        window.removeEventListener("wheel", disableScroll, { passive: false });
+        window.removeEventListener("touchmove", disableScroll, { passive: false });
+        window.removeEventListener("keydown", keyBlock, { passive: false });
+    }
+
+    // 禁止方向键、空格、PageUp/PageDown
+    function keyBlock(e) {
+        const keys = [32, 33, 34, 35, 36, 37, 38, 39, 40]; // 空格、PgUp、PgDn、End、Home、方向键
+        if (keys.includes(e.keyCode)) {
+            e.preventDefault();
+            return false;
+        }
+    }
+
+    // 初始锁定滚动
+    lockScroll();
+    window.history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
+    window.addEventListener('load', () => {
+        const hero = document.querySelector('.hero');
+        const bgUrl = getComputedStyle(hero).backgroundImage.replace(/url\("?|"?\)/g, '');
+        const img = new Image();
+        img.src = bgUrl;
+
+        img.onload = () => {
+            const welcome = document.querySelector('.welcome-text');
+            setTimeout(() => {
+                welcome.style.opacity = '0'; // 整个容器淡出
+                unlockScroll(); // 恢复滚动
+                setTimeout(() => {
+                    welcome.style.display = 'none'; // 移除欢迎页
+                }, 2000);
+            }, 500);
+        };
+    });
     /* -------------------- 获取一言 -------------------- */
     const quoteElement = document.getElementById('quote');
     const loadingStatus = document.getElementById('loading-status');
@@ -53,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //     const navbar = document.querySelector('.navbar');
     //     if (currentScrollTop > lastScrollTop) {
     //         // 向下滚动
-    //         navbar.style.top = '-60px'; // 假设导航栏高度为 60px
+    //         navbar.style.top = '-60px'; 
     //     } else {
     //         // 向上滚动
     //         navbar.style.top = '0';
@@ -89,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function lazyLoadImages() {
         const images = document.querySelectorAll('img[data-src]');
 
-        // 兼容性降级方案
         if (!('IntersectionObserver' in window)) {
             images.forEach(img => {
                 if (img.dataset.src) img.src = img.dataset.src;
@@ -150,7 +203,21 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+    //QQ邮箱功能
+    const btn = document.getElementById('toggleBtn');
+    const menu = document.getElementById('popupMenu');
 
+    btn.addEventListener('click', () => {
+        // 切换显示/隐藏
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+
+    // 点击页面其他地方时收起菜单
+    document.addEventListener('click', (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = 'none';
+        }
+    });
     initScrollButtons();
 
 });
