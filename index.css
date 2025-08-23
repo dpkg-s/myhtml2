@@ -49,9 +49,15 @@ body.dark-mode hr {
     color: #666;
 }
 
-body.dark-mode .popup {
+body.dark-mode .hover-box>button {
     background-color: #333;
 }
+
+body.dark-mode .popup {
+    background-color: #444;
+    border: 1px solid #000;
+}
+
 
 /* -------------------- 夜间模式按钮 -------------------- */
 #mode-toggle {
@@ -432,7 +438,6 @@ body.dark-mode .scroll-btn {
 
 .hover-box>button {
     border: none;
-    background-color: #fff;
     color: #f00;
 }
 

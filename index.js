@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //     lastScrollTop = currentScrollTop;
     // });
     loadHitokoto();
-    lazyLoadImages();
+    // lazyLoadImages();
     /* --------------------  下滑按钮  -------------------- */
     const scrollDownBtn = document.getElementById('scroll-down-btn');
     const heroSection = document.querySelector('.hero');
@@ -140,42 +140,98 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     /* -------------------- 图片懒加载 -------------------- */
-    function lazyLoadImages() {
-        const images = document.querySelectorAll('img[data-src]');
+    // function lazyLoadImages() {
+    //     const images = document.querySelectorAll('img[data-src]');
 
-        if (!('IntersectionObserver' in window)) {
-            images.forEach(img => {
-                if (img.dataset.src) img.src = img.dataset.src;
-            });
-            return;
+    //     if (!('IntersectionObserver' in window)) {
+    //         images.forEach(img => {
+    //             if (img.dataset.src) img.src = img.dataset.src;
+    //         });
+    //         return;
+    //     }
+
+    //     const observer = new IntersectionObserver((entries) => {
+    //         entries.forEach(entry => {
+    //             if (entry.isIntersecting) {
+    //                 const img = entry.target;
+    //                 img.src = img.dataset.src || '';
+    //                 img.removeAttribute('data-src');
+    //                 observer.unobserve(img);
+
+    //                 img.onload = () => {
+    //                     img.style.opacity = 1;
+    //                     if (loadingStatus) {
+    //                         loadingStatus.textContent = `图片加载完成: ${img.alt || ''}`;
+    //                         setTimeout(() => loadingStatus.textContent = "", 1500);
+    //                     }
+    //                 };
+    //             }
+    //         });
+    //     },
+    //         { rootMargin: '200px' });
+    //     images.forEach(img => observer.observe(img));
+    // }
+    /* -------------------- 图片生成随机 -------------------- */
+    (() => {
+        function loadImages(containerId, folder) {
+            const container = document.getElementById(containerId);
+            const startIndex = 1;            // 起始编号
+            const maxMissing = 3;            // 连续缺失阈值
+            const imgs = [];                 // 存放加载成功的图片
+
+            async function loadSequence() {
+                let i = startIndex;
+                let missing = 0;
+                //获取
+                while (missing < maxMissing) {
+                    const url = folder + i + ".jpg";
+                    const imgEl = await tryLoadImage(url);
+
+                    if (imgEl) {
+                        imgs.push(imgEl);
+                        missing = 0;
+                    } else {
+                        missing++;
+                    }
+                    i++;
+                }
+
+                // 打乱
+                for (let j = imgs.length - 1; j > 0; j--) {
+                    const r = Math.floor(Math.random() * (j + 1));
+                    [imgs[j], imgs[r]] = [imgs[r], imgs[j]];
+                }
+
+                // 插入容器
+                imgs.forEach(img => {
+                    const wrap = document.createElement("div");
+                    wrap.className = "scroll-item";
+                    wrap.appendChild(img);
+                    container.appendChild(wrap);
+                });
+
+                updateStatus(containerId + " 加载结束，共 " + imgs.length + " 张");
+            }
+
+            function tryLoadImage(src) {
+                return new Promise(resolve => {
+                    const img = new Image();
+                    img.decoding = "async";
+                    img.referrerPolicy = "no-referrer";
+                    img.onload = () => resolve(img);
+                    img.onerror = () => resolve(null);
+                    img.src = src;
+                    img.alt = "";
+                });
+            }
+
+            loadSequence();
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || '';
-                    img.removeAttribute('data-src');
-                    observer.unobserve(img);
-
-                    img.onload = () => {
-                        img.style.opacity = 1;
-                        if (loadingStatus) {
-                            loadingStatus.textContent = `图片加载完成: ${img.alt || ''}`;
-                            setTimeout(() => loadingStatus.textContent = "", 1500);
-                        }
-                    };
-                }
-            });
-        },
-            { rootMargin: '200px' });
-        images.forEach(img => observer.observe(img));
-    }
-    /* -------------------- 图片生成随机 -------------------- */
-    // function getRadom(N, M) {
-    //     return Math.floor(Math.random() * (M - N + 1)) + N
-    // }
-    // console 
+        // 调用：容器 ID + 图片文件夹路径
+        loadImages("imgScrollContainer", "./jpg/1/");
+        loadImages("imgScrollContainer2", "./jpg/2/");
+    })();
     /* -------------------- 滚动两侧按钮 -------------------- */
     function initScrollButtons() {
         const wrappers = document.querySelectorAll('.scroll-wrapper');
@@ -203,7 +259,35 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-    //QQ邮箱功能
+    //----------------------更新日志----------------/
+    const logs = [
+        { date: "2025-8-21", text: "优化/入场动画" },
+        { date: "2025-8-20", text: "增加联系方式/优化/更改了几个按钮" },
+        { date: "2025-8-19", text: "优化" },
+        { date: "2025-7-11", text: "优化，加了些按钮和动画" },
+        { date: "2025-7-6", text: "终于修了历史BUG" },
+        { date: "2025-7-2", text: "突然想起来我有这个这个网站" },
+        { date: "2025-3-6", text: "增加了些动画效果" },
+        { date: "2025-3-6", text: "映射成功" },
+        { date: "2025-3-5", text: "初版完成" }
+    ];
+
+    const container = document.getElementById("scrollContainer");
+
+    // 循环渲染
+    logs.forEach(log => {
+        const div = document.createElement("div");
+        div.className = "scroll-item2";
+
+        div.innerHTML = `
+            <h5>${log.date}</h5>
+            <small>${log.text}</small>
+        `;
+
+        container.appendChild(div);
+    });
+
+    //----------------------QQ邮箱功能--------------/
     const btn = document.getElementById('toggleBtn');
     const menu = document.getElementById('popupMenu');
 
