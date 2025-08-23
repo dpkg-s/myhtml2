@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     container.appendChild(wrap);
                 });
 
-                updateStatus(containerId + " 加载结束，共 " + imgs.length + " 张");
+                  console.log(" 加载结束，共 " + imgs.length + " 张");
             }
 
             function tryLoadImage(src) {
@@ -305,3 +305,4 @@ document.addEventListener('DOMContentLoaded', function () {
     initScrollButtons();
 
 });
+
