@@ -1,4 +1,74 @@
 document.addEventListener('DOMContentLoaded', function () {
+    /*------------------ 入场加载调试 -----------------*/
+    (function () {
+        const panel = document.getElementById('network-panel');
+        const resourceSet = new Set();
+        const fetchSet = new Set();
+        const xhrSet = new Set();
+
+        // 输出到面板
+        const logToPanel = (type, url, info) => {
+            const div = document.createElement('div');
+            div.className = 'network-entry';
+            div.innerHTML = `<span class="type">[${type}]</span> ${url} <br> ${info || ''}`;
+            panel.appendChild(div);
+            panel.scrollTop = panel.scrollHeight;
+        };
+
+        // 时间
+        const logResources = () => {
+            const resources = performance.getEntriesByType('resource');
+            resources.forEach(res => {
+                if (!resourceSet.has(res.name)) {
+                    resourceSet.add(res.name);
+                    logToPanel('RESOURCE', res.name, `类型: ${res.initiatorType}, 加载时间: ${res.duration.toFixed(2)}ms`);
+                }
+            });
+        };
+
+        //拦截 Fetch
+        const originalFetch = window.fetch;
+        window.fetch = async (...args) => {
+            const url = args[0];
+            if (!fetchSet.has(url)) fetchSet.add(url);
+            logToPanel('FETCH', url, '正在加载...');
+            const response = await originalFetch(...args);
+            const clone = response.clone();
+            clone.text().then(text => {
+                logToPanel('FETCH', url, `${text.slice(0, 69)}`);
+            }).catch(err => logToPanel('FETCH', url, `解析失败: ${err}`));
+            return response;
+        };
+
+        //拦截 XHR
+        (function () {
+            const originalOpen = XMLHttpRequest.prototype.open;
+            const originalSend = XMLHttpRequest.prototype.send;
+
+            XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+                this._url = url;
+                return originalOpen.call(this, method, url, ...rest);
+            };
+
+            XMLHttpRequest.prototype.send = function (body) {
+                this.addEventListener('load', () => {
+                    if (!xhrSet.has(this._url)) xhrSet.add(this._url);
+                    logToPanel('XHR', this._url, `响应内容(前200字符): ${this.responseText.slice(0, 200)}`);
+                });
+                return originalSend.call(this, body);
+            };
+        })();
+
+        //轮询资源
+        const interval = setInterval(() => {
+            logResources();
+            if (document.readyState === 'complete') {
+                clearInterval(interval);
+                logToPanel('INFO', '页面加载完成', '');
+            }
+        }, 100);
+    })();
+    /*------------------ 入场加载 -----------------*/
     // 禁用滚动函数
     function disableScroll(e) {
         e.preventDefault();
@@ -43,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = bgUrl;
 
         img.onload = () => {
-            const welcome = document.querySelector('.welcome-text');
+            const welcome = document.querySelector('.welcome');
             setTimeout(() => {
                 welcome.style.opacity = '0'; // 整个容器淡出
                 unlockScroll(); // 恢复滚动
@@ -171,12 +241,12 @@ document.addEventListener('DOMContentLoaded', function () {
     //         { rootMargin: '200px' });
     //     images.forEach(img => observer.observe(img));
     // }
-    /* -------------------- 图片生成随机 -------------------- */
+    /* -------------------- 图片加载 -------------------- */
     (() => {
         function loadImages(containerId, folder) {
             const container = document.getElementById(containerId);
             const startIndex = 1;            // 起始编号
-            const maxMissing = 3;            // 连续缺失阈值
+            const maxMissing = 2;            // 连续缺失阈值
             const imgs = [];                 // 存放加载成功的图片
 
             async function loadSequence() {
@@ -210,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     container.appendChild(wrap);
                 });
 
-                updateStatus(containerId + " 加载结束，共 " + imgs.length + " 张");
+                console.log(containerId + " 加载结束，共 " + imgs.length + " 张");
             }
 
             function tryLoadImage(src) {
@@ -287,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(div);
     });
 
-    //----------------------QQ邮箱功能--------------/
+    //----------------------联系我功能--------------/
     const btn = document.getElementById('toggleBtn');
     const menu = document.getElementById('popupMenu');
 
