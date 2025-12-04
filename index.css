@@ -255,8 +255,8 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url(http://www.98qy.com/sjbz/api.php) no-repeat center/cover;
-    /* background: url(https://pic.re/image) no-repeat center/cover; */
+    /*background: url(http://www.98qy.com/sjbz/api.php) no-repeat center/cover;*/
+    background: url(https://pic.re/image) no-repeat center/cover;
     color: #fff;
     text-align: center;
     background-color: #aaa;
@@ -493,4 +493,5 @@ body.dark-mode .scroll-btn {
 
 .popup a:hover {
     background-color: #f0f0f0;
+
 }
